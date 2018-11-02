@@ -1,0 +1,12 @@
+#!/Users/lesterr/nba-stats-hy/hy/bin/python3.7
+# -*- coding: utf-8 -*-
+# EASY-INSTALL-ENTRY-SCRIPT: 'hy==0.15.0+41.g4132adb','console_scripts','hy'
+__requires__ = 'hy==0.15.0+41.g4132adb'
+import re
+import sys
+
+from hy.cmdline import hy_main
+
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
+    sys.exit(hy_main())
