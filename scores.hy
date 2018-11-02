@@ -10,11 +10,13 @@
 (setv current-date (+ (str NOW.year) (str NOW.month)
                       (cond [(= (len (str NOW.day)) 1) (+ "0" (str NOW.day))]
                             [(= (len (str NOW.day)) 2) (str NOW.day)])))
-
+(setv yesterday (+ (str NOW.year) (str NOW.month)
+                      (cond [(= (len (str NOW.day)) 1) (+ "0" (str (- NOW.day 1)))]
+                            [(= (len (str NOW.day)) 2) (str (- NOW.day 1))])))
 (setv COMMAND (get sys.argv 1))
+
 (cond [(= (len sys.argv) 3) (setv ARG (get sys.argv 2))]
       [(!= (len sys.argv) 3) (setv ARG None)])
-
 
 (defn get-scores [date]
   ;; makes a GET request for the scores on the given date
@@ -34,6 +36,7 @@
     (print (.format "{0:<10}" (str (+ home-team ": " (str hteam-score))))
            (+ visiting-team ": " (str vteam-score)))))
 
-(if (and (= COMMAND "scores") (!= ARG None))
-    (get-scores ARG)
-    (get-scores current-date))
+(cond
+  [(and (= COMMAND "scores") (= ARG None)) (get-scores current-date)]
+  [(and (= COMMAND "scores") (= (len ARG) 8)) (get-scores ARG)]
+  [(and (= COMMAND "scores") (= ARG "last-night")) (get-scores yesterday)])
