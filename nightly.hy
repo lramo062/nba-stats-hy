@@ -5,7 +5,6 @@
 (import sys)
 
 (defn get-player-data [command]
-  ;; makes a GET request for the scores on the given date
   (setv link "http://stats.nba.com/js/data/widgets/home_daily.json")
   (setv response (.json (.get requests link)))
   (setv player-data (-> response (get "items") (get 0) (get "items")))
@@ -15,7 +14,7 @@
     [(= command "team") (print-team-data team-data)]))
     
 (defn print-player-data [data]
-  (print "Daily Player Leaders:")
+  (print "Nightly Player Leaders:")
   (for [x data]
     (setv title (get x "title"))
     (setv cat (get x "name"))
@@ -24,7 +23,7 @@
       (print "\t" (get y "TEAM_ABBREVIATION") " " (get y "PLAYER_NAME") " " (get y cat)))))
 
 (defn print-team-data [data]
-  (print "Daily Team Leaders:")
+  (print "Nightly Team Leaders:")
   (for [x data]
     (setv title (get x "title"))
     (setv cat (get x "name"))
